@@ -29,3 +29,68 @@ double LearningSamples[10][10][5] =
 	{{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,0}},
 	{{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,1},{0,0,0,0,1},{0,0,0,0,1},{0,0,0,0,1},{1,0,0,0,1},{0,1,1,1,0}}
 };
+// Коефіцієнт швидкості навчання диференціальним методом Хебба.
+double alpha = 0.0005;
+// Коефіцієнт швидкості навчання за алгоритмом навчання одношарового персептрона.
+double eta   = 0.1;
+// Коефіцієнт напівлінійних активаційної функції.
+double kappa = 0.02;
+class TFormMain : public TForm
+{
+__published:	// IDE-managed Components
+	TDrawGrid *DrawGridPattern;
+	TStringGrid *StringGrid1;
+	TStringGrid *StringGrid2;
+	TStringGrid *StringGrid3;
+	TStringGrid *StringGridOut;
+	TLabel *LabelPattern;
+	TComboBox *ComboBoxSamples;
+	TButton *ButtonRecognize;
+	TLabel *LabelOuts;
+	TButton *ButtonSetWeights;
+	TButton *ButtonTrainNeuronet;
+	TButton *ButtonTrainPerceptron;
+	TLabel *LabelResult;
+	TLabel *LabelOut;
+	TLabel *LabelWeights;
+	void __fastcall ComboBoxSamplesChange(TObject *Sender);
+	void __fastcall DrawGridPatternDrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect, TGridDrawState State);
+	void __fastcall DrawGridPatternSelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect);
+	void __fastcall ButtonSetWeightsClick(TObject *Sender);
+	void __fastcall ButtonTrainNeuronetClick(TObject *Sender);
+	void __fastcall ButtonTrainPerceptronClick(TObject *Sender);
+	void __fastcall ButtonRecognizeClick(TObject *Sender);
+
+private:	// User declarations
+public:
+	__fastcall TFormMain(TComponent* Owner);
+	// Вивід значень виходів персептрона.
+	void __fastcall PrintOut();
+	// Вивід значень вагових коефіцієнтів нейронів.
+	void __fastcall PrintWeights();
+	// Генерація випадкових вагових коефіцієнтів нейронів.
+	void __fastcall RandomizeWeights();
+	// Поширення сигналів по шарах нейромережі.
+	void __fastcall Propagate();
+	// Класифікація вихідних сигналів нейромережі.
+	void __fastcall Classificate();
+	// Навчання шарів сигнальним методом Хебба.
+	void __fastcall SignalHebbianLearning();
+	// Навчання за алгоритмом навчання одношарового персептрона.
+	void __fastcall PerceptronBasedLearning();
+
+	// Входи нейромережі.
+	int input[10][5];
+	// Вектори вихідних сигналів нейронів шарів.
+	double out[2][50];
+	// Вектор вихідних сигналів персептрона.
+	double outP[10];
+	// Вектори вагових коефіцієнтів нейронів шарів.
+	double weight[2][50][50];
+	// Вектори вагових коефіцієнтів нейронів персептрона.
+	double weightP[10][50];
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFormMain *FormMain;
+//---------------------------------------------------------------------------
+#endif
