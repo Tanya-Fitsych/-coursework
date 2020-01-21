@@ -70,6 +70,30 @@ void __fastcall TFormMain::DrawGridPatternSelectCell(TObject *Sender, int ACol, 
 	// вивід рузультату.
 	LabelOut->Caption = "";
 //---------------------------------------------------------------------------
+// Натискання кнопки "Задати коефіцієнти".
+void __fastcall TFormMain::ButtonSetWeightsClick(TObject *Sender)
+{
+	//Генерація випадкових вагових коефіцієнтів нейронів.
+	RandomizeWeights();
+	//Вивід значень вагових коефіцієнтів нейронів.
+	PrintWeights();
+	// Вивід результата.
+	LabelOut->Caption = "";
+	//
+	ButtonTrainNeuronet->Enabled = true;
+}
+// Натискання кнопки "Навчити нейромережу"
+void __fastcall TFormMain::ButtonTrainNeuronetClick(TObject *Sender)
+{
+	//  Навчання шарів нейромережі сигнальним методом Хебба.
+	SignalHebbianLearning();
+	//Вивід значень вагових коефіцієнтів нейронів шарів
+	PrintWeights();
+	// Вивід результата.
+	LabelOut->Caption = "";
+	ButtonTrainPerceptron->Enabled = true;
+}
+
 }
 	
 		//Натискання кнопки "навчити персептрон"
