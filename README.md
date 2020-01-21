@@ -108,6 +108,32 @@ void __fastcall TFormMain::ButtonTrainNeuronetClick(TObject *Sender)
 	ButtonRecognize->Enabled = true;
 }
 	 
+	 // Натискання кнопки "Розпізнати  образ".
+void __fastcall TFormMain::ButtonRecognizeClick(TObject *Sender)
+{
+// Результат распознавания образа.
+	int result;
+	// Максимальне значення виходу персептрона (ініціалізується мінімальним).
+	double max = -1;
+	// Розповсюдження сигналів по шарам нейромережі.
+	Propagate();
+	// Классифікація персептроном вихідних сигналів посліднього шару.
+	Classificate();
+	// Вивід значень виходів персептрона.
+	PrintOut();
+	// Пошук серед виходів персептрона елемента з максимальним значенням.
+	for (int i = 0; i < 10; i++)
+	{
+		if (max < outP[i])
+		{
+			max = outP[i];
+			result = i;
+		}
+	}
+	// Вивід результата.
+	LabelOut->Caption = result;
+}
+
 //---------------------------------------------------------------------------
 				// Вивід значень вагових коефіцієнтів нейронів.
 void __fastcall TFormMain::PrintWeights()
